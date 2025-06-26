@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generated Map Result</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+
+        .map-image {
+            display: block;
+            width: 80%;
+            margin: 20px auto;
+            border: 3px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .buttons a {
+            text-decoration: none;
+        }
+
+        .buttons button {
+            background: linear-gradient(to right, #007BFF, #00BFFF);
+            color: white;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            margin: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .buttons button:hover {
+            background: linear-gradient(to right, #0056b3, #009ec3);
+        }
+
+        .legend {
+            margin-top: 40px;
+        }
+
+        .legend h3 {
+            color: #007BFF;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 4px;
+            border: 1px solid #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Generated Map</h1>
+        <img src="{{ image_url }}" alt="Generated Map" class="map-image">
+
+        <div class="buttons">
+            <a href="{{ url_for('download', filename=filename) }}">
+                <button>Download Map</button>
+            </a>
+            <a href="/">
+                <button>Generate Another Map</button>
+            </a>
+        </div>
+
+        <div class="legend">
+            <h3>Color Legend</h3>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #433633;"></div>
+                <span>Buildings</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FF5E5B;"></div>
+                <span>Roads & Streets</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #4DA1A9;"></div>
+                <span>Water Bodies</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #7BAF5C;"></div>
+                <span>Parks & Forests</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #F2C14E;"></div>
+                <span>Beaches & Open Lands</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

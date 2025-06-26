@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Base Map Creation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: #eef2f3;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+            border-bottom: 3px solid #007BFF;
+            padding: 20px 10px;
+        }
+
+        .header img {
+            height: 80px;
+            margin: 0 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007BFF;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input, select, textarea {
+            margin-bottom: 12px;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="color"] {
+            width: 60px;
+            padding: 0;
+        }
+
+        .section {
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: #f2f9ff;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #007BFF, #00C6FF);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #0056b3, #009ec3);
+        }
+    </style>
+
+    <script>
+        function updateColorPickers() {
+            const container = document.getElementById("color-pickers");
+            const numColors = parseInt(document.getElementById("num_colors").value) || 1;
+            container.innerHTML = "";
+            for (let i = 1; i <= numColors; i++) {
+                const label = document.createElement("label");
+                label.textContent = `Color ${i}:`;
+                const input = document.createElement("input");
+                input.type = "color";
+                input.name = `color_${i}`;
+                input.value = i % 2 === 0 ? "#FF5E5B" : "#433633"; // alternate default colors
+                container.appendChild(label);
+                container.appendChild(input);
+                container.appendChild(document.createElement("br"));
+            }
+        }
+        window.onload = updateColorPickers;
+    </script>
+</head>
+<body>
+    <div class="header">
+        <img src="D:\DIC\prettymaps-main\static\download 1.png" alt="Gov of India Logo">
+        <img src="D:\DIC\prettymaps-main\static\download 6.png" alt="Department of Space Logo">
+        <img src="D:\DIC\prettymaps-main\static\logo_bottom 1.png" alt="ISRO Logo">
+    </div>
+
+    <div class="container">
+        <h1>ISRO, NRSC - RRSC Central</h1>
+
+        <form method="POST">
+            <div class="section">
+                <label for="location">Location:</label><br>
+                <textarea name="location" rows="3">Stad van de Zon, Heerhugowaard, Netherlands</textarea><br>
+
+                <label for="radius">Radius (km):</label>
+                <input type="number" step="0.25" name="radius" value="0.75"><br>
+
+                <label for="circular">Circular Map:</label>
+                <input type="checkbox" name="circular"><br>
+
+                <label for="preset">Preset:</label>
+                <select name="preset">
+                    {% for preset in presets %}
+                        <option value="{{ preset }}">{{ preset }}</option>
+                    {% endfor %}
+                </select><br>
+            </div>
+
+            <div class="section">
+                <label>Page Size (inches):</label><br>
+                Width: <input type="number" step="0.1" name="width" value="8.27">
+                Height: <input type="number" step="0.1" name="height" value="11.69"><br>
+
+                <label for="dpi">DPI:</label>
+                <input type="number" name="dpi" value="100"><br>
+            </div>
+
+            <div class="section">
+                <label for="num_colors">Number of Colors:</label>
+                <input type="number" id="num_colors" name="num_colors" value="2" min="1" max="10" onchange="updateColorPickers()"><br>
+                <div id="color-pickers"></div>
+            </div>
+
+            <div class="section">
+                <h3>Map Layers</h3>
+                {% for layer in ['building', 'streets', 'waterway', 'water', 'sea', 'forest', 'green', 'rock', 'beach', 'parking'] %}
+                    <input type="checkbox" name="{{ layer }}"> {{ layer.capitalize() }}<br>
+                {% endfor %}
+            </div>
+
+            <br><button type="submit">Generate Map</button>
+        </form>
+    </div>
+</body>
+</html>
